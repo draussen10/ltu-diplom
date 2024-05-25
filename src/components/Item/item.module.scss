@@ -1,0 +1,13 @@
+.item {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px;
+  background-color: #fcfcf7;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #555;
+    color: #fcfcf7;
+  }
+}
