@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 class SearchStore {
     query: string = ''
+    selected: string | undefined;
 
     constructor() {
         makeAutoObservable(this)
@@ -9,6 +10,10 @@ class SearchStore {
 
     setQuery = (text: string) => {
         this.query = text
+    }
+
+    setSelected = (text: string | undefined) => {
+        this.selected = text
     }
 }
 

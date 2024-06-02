@@ -9,7 +9,7 @@ type CardPanelProps = {
 const CardPanel: React.FC<CardPanelProps> = ({ title, children }) => {
     return (
         <div className={styles.card}>
-            <h2 className={styles.title}>{title}</h2>
+            <div className={styles.title}>{title}</div>
             <div className={styles.content}>{children}</div>
         </div>
     );

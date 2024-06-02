@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './App.scss'
-import {YMapsComponent, CardPanel, Input, Item} from "./components";
+import {YMapsComponent, CardPanel, Input, Item, ItemCard} from "./components";
 import {useStore} from "./stores";
 import {observer} from "mobx-react-lite";
 
@@ -18,8 +18,6 @@ function App() {
     }
 
     const items = [
-        'Ель зеленая',
-        'Двустролка',
         'Береза серебристая',
         'Сосна высокая',
         'Липа цветущая',
@@ -118,19 +116,43 @@ function App() {
         'Смородина черная'
     ]
 
+    const itemCardTextSalix = '<p><b>И́ва (лат. Sálix)</b> — род древесных растений семейства Ивовые (Salicaceae).<br>В русском языке по отношению к видам ивы используется также много других названий — ветла́, раки́та, лоза́, лози́на, ве́рба, тальник.<br>Очень распространённые в средней части России растения. Большинство видов ив любят влажность и селятся в сырых местах, в сухих же местах (на склонах, песках и т. п.) и на болотах растут сравнительно немногие виды. Встречается ива и в лесах, как подмесь к другим деревьям.</p>';
+    const itemCardTextPopulus = '<p><b>То́поль (лат. Pópulus)</b> — род двудомных (редко однодомных) листопадных быстрорастущих деревьев семейства Ивовые (Salicaceae).<br>Лес с преобладанием тополей называют тополёвником.</p>';
+
+    const itemCardPhotoSalix = [
+        'https://landas.ru/wp-content/uploads/2016/09/plakucay.jpg',
+        'https://superwalls.top/uploads/posts/2022-06/1655487346_31-gamerwall-pro-p-kust-rakiti-nad-rekoi-priroda-krasivo-foto-36.jpg'
+    ]
+
+    const itemCardPhototPopulus = [
+        'https://drevesina-master.ru/wp-content/uploads/2022/08/derevo-topol-10.jpg'
+    ]
+
     return (
         <div className="App">
-            <YMapsComponent className={'flexDiv'}/>
+            <YMapsComponent className={'flexDiv'} selected={searchStore.selected}/>
             <CardPanel
                 title={
                     <>
-                        <div>Ботанического сада ЛТУ</div>
-                        <Input
-                            placeholder={'Введите поисковой запрос'}
-                            value={searchStore.query}
-                            onChange={searchStore.setQuery}
-                            onEscape={onEscape}
-                        />
+                        <div className='flex'>
+                            {searchStore.selected ? searchStore.selected : 'Атлас ботанического сада ЛТУ'}
+                            {searchStore.selected && (
+                                <button className='button' onClick={() => searchStore.setSelected(undefined)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"/>
+                                    </svg>
+                                </button>
+                                )
+                            }
+                        </div>
+                        {!searchStore.selected && (
+                            <Input
+                                placeholder={'Введите поисковой запрос'}
+                                value={searchStore.query}
+                                onChange={searchStore.setQuery}
+                                onEscape={onEscape}
+                            />
+                        )}
                     </>
                 }
             >
@@ -143,10 +165,11 @@ function App() {
                 }
                 >
                     {
-                        items
-                            .filter(item => item.toLowerCase().includes(searchStore.query.toLowerCase()))
-                            .map(item => <Item>{item}</Item>)
-
+                        searchStore.selected
+                            ? <ItemCard itemCardText={itemCardTextSalix} itemCardPhoto={itemCardPhotoSalix} />
+                            : items
+                                .filter(item => item.toLowerCase().includes(searchStore.query.toLowerCase()))
+                                .map(item => <Item onClick={() => searchStore.setSelected(item)}>{item}</Item>)
                     }
                 </div>
             </CardPanel>

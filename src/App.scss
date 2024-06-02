@@ -11,3 +11,25 @@
 .flexDiv {
     flex: 1;
 }
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button {
+    background-color: #555;
+    color: #fcfcf7;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > svg > path {
+        fill: #fcfcf7;
+    }
+}

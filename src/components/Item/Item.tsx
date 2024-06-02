@@ -3,11 +3,12 @@ import styles from './item.module.scss'
 
 type ItemProps = {
     children: ReactNode;
+    onClick: () => void
 };
 
-const Item = ({children}: ItemProps) => {
+const Item = ({children, onClick}: ItemProps) => {
     return (
-        <div className={styles.item}>
+        <div onClick={onClick} className={styles.item}>
             {children}
         </div>
     );

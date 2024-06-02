@@ -4,7 +4,18 @@ import {Map, Placemark, YMaps} from "@pbe/react-yandex-maps";
 
 interface YMapsComponentProps {
     className?: string;
+    selected: string | undefined
 }
+
+const pointsSalix: number[][] = [
+    [59.99585015836563,30.333922131997074],
+    [59.99430237180858,30.34902833316895],
+    [59.99496176134154,30.333332870844362]
+]
+
+const pointsPopulus = [
+    [59.99164919188529,30.340391105005544]
+]
 
 const YMapsComponent: FC<YMapsComponentProps> = ({className}) => {
     return (
@@ -28,20 +39,22 @@ const YMapsComponent: FC<YMapsComponentProps> = ({className}) => {
                         yandexMapDisablePoiInteractivity: true,
                     }}
                 >
-                    <Placemark
-                        geometry={[55.684758, 37.738521]}
-                        options={{
-                            iconImageSize: [30, 30],
-                            draggable: false,
-                            preset: "islands#greenIcon",
-                            hideIconOnBalloonOpen: false,
-                            openEmptyHint: true
-                        }}
-                        properties={{
-                            iconContent: "+",
-                            hintContent: "-"
-                        }}
-                    />
+                    {
+                        pointsSalix.map(point => {
+                            return (
+                                <Placemark
+                                    geometry={point}
+                                    options={{
+                                        draggable: false,
+                                        preset: "islands#blackIcon",
+                                        hideIconOnBalloonOpen: false,
+                                        openEmptyHint: true,
+
+                                    }}
+                                />
+                            )
+                        })
+                    }
                 </Map>
             </YMaps>
         </div>
